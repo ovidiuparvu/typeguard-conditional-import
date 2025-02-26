@@ -1,5 +1,14 @@
+import os
+from typing import Any, Callable
 from rich.console import Console
-from typeguard import typechecked
+
+
+if os.getenv("ENABLE_TYPEGUARD", "1") == "1":
+    from typeguard import typechecked
+else:
+    # Define a no-op decorator
+    def typechecked(func: Callable[..., Any]) -> Callable[..., Any]:
+        return func
 
 @typechecked
 class Formatter:
